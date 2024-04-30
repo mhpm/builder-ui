@@ -12,6 +12,7 @@ const stLabel = (asToggle) => css`
   width: auto;
   margin-left: ${asToggle ? 'var(--sp-2xs, 10px)' : '30px'};
   margin-right: ${asToggle ? 'var(--sp-2xs, 10px)' : 'var(--sp-2xl, 20px)'};
+  height: inherit;
 `;
 
 const stBfsCheckboxMain = (asToggle) => css`

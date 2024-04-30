@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-
 import { action } from '@storybook/addon-actions';
 
 import { BfsButton } from './BfsButton';
@@ -7,16 +6,28 @@ import { BfsButton } from './BfsButton';
 export default {
   title: 'Atoms/BfsButton',
   component: BfsButton,
+  parameters: {
+    componentSubtitle: 'Reusable General Button for BFS projects',
+  },
   argTypes: {
     'data-testid': {
       control: 'none',
     },
+    icon: {
+      control: {
+        type: 'select',
+        options: [
+          'spinner',
+          'cog',
+          'circle',
+        ],
+      },
+    },
     onClick: {
       control: 'none',
     },
-    spinner: {
-      control: 'radio',
-      if: { arg: 'loading', loading: true },
+    param: {
+      control: 'none',
     },
   },
   args: {
@@ -25,7 +36,7 @@ export default {
     disabled: false,
     fluid: false,
     loading: false,
-    spinner: 'spinner',
+    icon: 'spinner',
     onClick: action('Button Clicked'),
     escEnable: false,
   },
@@ -144,6 +155,17 @@ export const GhostMode = {
       <BfsButton {...args} mode="secondaryGhost" />
       <BfsButton {...args} mode="negativeGhost" />
       <BfsButton {...args} mode="positiveGhost" />
+    </div>
+  ),
+};
+
+export const tableHeader = {
+  render: (args) => (
+    <div>
+      <BfsButton {...args} mode="tableHeader" label="Header" />
+      <BfsButton {...args} mode="tableHeader" label="Header" />
+      <BfsButton {...args} mode="tableHeader" label="Header" />
+      <BfsButton {...args} mode="tableHeader" label="Header" />
     </div>
   ),
 };
@@ -401,7 +423,10 @@ export const Gallery = {
 export const WithParam = {
   args: {
     label: 'With Params',
-    param: { param1: 'param 1', param2: [] },
+    param: {
+      key1: 'param 1',
+      key2: [],
+    },
   },
   render: (args) => <BfsButton {...args} />,
 };

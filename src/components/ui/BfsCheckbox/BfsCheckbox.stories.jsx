@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import {BfsCheckbox} from '.';
+import { fn } from '@storybook/test';
+import { BfsCheckbox } from '.';
 
 export default {
   title: 'Atoms/BfsCheckbox',
@@ -16,7 +16,7 @@ export default {
     name: 'checkbox1',
     label: 'label',
     asToggle: false,
-    onChange: action('changed'),
+    onChange: fn(),
     disabled: false,
     param: { param1: 'param test' },
     tabIndex: '1',
@@ -51,10 +51,10 @@ export const DisabledCheckbox = {
 
 export const DisabledCheckedCheckbox = {
   args: {
-    disbled: true,
+    disabled: true,
     checked: true,
   },
-  render: () => <BfsCheckbox />,
+  render: (args) => <BfsCheckbox {...args} />,
 };
 
 export const AsToggleUncheckedCheckbox = {
