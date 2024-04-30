@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BfsButton component render Correctly without crashing, matching snapshot 1`] = `
+<span
+  class="content"
+>
+  button
+</span>
+`;
