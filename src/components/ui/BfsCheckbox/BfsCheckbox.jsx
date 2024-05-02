@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+/** @jsxImportSource @emotion/react */ 
+
+import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-/** @jsxImportSource @emotion/react */ 
 import { css } from '@emotion/react';
 
 const transitionDuration = '0.1s';
@@ -188,6 +189,10 @@ export const BfsCheckbox = ({
 }) => {
   const [checkedStatus, setCheckedStatus] = useState(checked);
 
+  useEffect(() => {
+    setCheckedStatus(checked);
+  }, [checked]);
+
   const changeHandle = useCallback((ev) => {
     ev.stopPropagation();
     setCheckedStatus(!checkedStatus);
@@ -219,7 +224,7 @@ export const BfsCheckbox = ({
         data-testid={dataTestId}
         type="checkbox"
         name={name}
-        checked={checkedStatus}
+        checked={!!checkedStatus}
         onChange={changeHandle}
         disabled={disabled}
       />
@@ -227,7 +232,7 @@ export const BfsCheckbox = ({
       <span
         className={asToggle ? 'toggle' : 'checkbox'}
         role="checkbox"
-        aria-checked={checkedStatus}
+        aria-checked={!!checkedStatus}
         tabIndex={tabIndex}
         onKeyDown={KeyDownHandler}
         aria-labelledby={`checkboxLabel-${name}`}
@@ -298,8 +303,8 @@ BfsCheckbox.propTypes = {
 
 BfsCheckbox.defaultProps = {
   'data-testid': undefined,
-  name: '',
-  label: '',
+  name: 'checkbox',
+  label: 'label',
   checked: false,
   disabled: false,
   param: null,

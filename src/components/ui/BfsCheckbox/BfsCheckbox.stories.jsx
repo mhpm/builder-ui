@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
 import { fn } from '@storybook/test';
 import { BfsCheckbox } from '.';
 
@@ -10,6 +9,9 @@ export default {
     'data-testid': {
       control: 'none',
     },
+    tabIndex: {
+      control: 'none'
+    }
   },
   args: {
     checked: false,
@@ -28,9 +30,6 @@ export default {
 export const Default = {};
 
 export const CheckedCheckbox = {
-  args: {
-    checked: true,
-  },
   render: (args) => <BfsCheckbox {...args} />,
 };
 

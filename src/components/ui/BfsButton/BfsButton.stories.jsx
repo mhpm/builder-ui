@@ -159,7 +159,7 @@ export const GhostMode = {
   ),
 };
 
-export const tableHeader = {
+export const TableHeader = {
   render: (args) => (
     <div>
       <BfsButton {...args} mode="tableHeader" label="Header" />

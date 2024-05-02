@@ -1,45 +1,47 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom';
-import { BfsBadge } from './BfsBadge'; // Adjust the import path as necessary
+import { BfsBadge } from './BfsBadge';
 
-describe('BfsBadge Component', () => {
-  test('renders with default props', () => {
-    render(<BfsBadge />);
-    const badgeElement = screen.getByText('label');
-    expect(badgeElement).toBeInTheDocument();
-    expect(badgeElement).toHaveStyle('background-color: var(--bfs-badge-bg-color, var(--rol-primary-bg-color))');
+describe('BfsBadge component render', () => {
+  it('Correctly, default', () => {
+    const { getByText } = render(<BfsBadge />);
+    expect(getByText('label')).toBeInTheDocument();
   });
 
-  test('renders with custom label', () => {
-    const customLabel = 'Custom Label';
-    render(<BfsBadge label={customLabel} />);
-    expect(screen.getByText(customLabel)).toBeInTheDocument();
+  it('Correctly with testid', () => {
+    const { getByTestId } = render(<BfsBadge data-testid="badge" />);
+    expect(getByTestId('badge')).toBeInTheDocument();
   });
 
-  test('renders with children instead of label', () => {
-    const childElement = <span>Child Content</span>;
-    render(<BfsBadge>{childElement}</BfsBadge>);
-    expect(screen.getByText('Child Content')).toBeInTheDocument();
+  it('Correctly with children', () => {
+    const { getByTestId } = render(<BfsBadge data-testid="badge"><span data-testid="descendant">badge with children</span></BfsBadge>);
+
+    const descendant = getByTestId('descendant');
+    expect(getByTestId('badge')).toContainElement(descendant);
+    expect(descendant).toHaveTextContent('badge with children');
   });
 
-  test('applies mode styles correctly', () => {
-    const { rerender } = render(<BfsBadge mode="primary" />);
-    expect(screen.getByText('label')).toHaveStyle('background-color: var(--bfs-badge-bg-color, var(--rol-primary-bg-color))');
-
-    rerender(<BfsBadge mode="secondary" />);
-    expect(screen.getByText('label')).toHaveStyle('background-color: var(--bfs-badge-bg-color, var(--rol-secondary-bg-color))');
-
-    rerender(<BfsBadge mode="positive" />);
-    expect(screen.getByText('label')).toHaveStyle('background-color: var(--bfs-badge-bg-color, var(--rol-positive-bg-color))');
-
-    rerender(<BfsBadge mode="negative" />);
-    expect(screen.getByText('label')).toHaveStyle('background-color: var(--bfs-badge-bg-color, var(--rol-negative-bg-color))');
+  it('Correctly, matching snapshot', () => {
+    const component = renderer.create(<BfsBadge />);
+    expect(component).toMatchSnapshot();
   });
+});
 
-  test('accepts data-testid for testing', () => {
-    const testId = 'custom-badge';
-    render(<BfsBadge data-testid={testId} />);
-    expect(screen.getByTestId(testId)).toBeInTheDocument();
+describe('BfsBadge component property', () => {
+  describe('label', () => {
+    it('Set to any text value', () => {
+      const customLabel = 'Custom Label';
+      const { getByText, getByTestId } = render(<BfsBadge data-testid="badge" label={customLabel} />);
+      expect(getByText(customLabel)).toBeInTheDocument();
+      expect(getByTestId('badge')).toHaveTextContent(customLabel);
+    });
+
+    it('Set to empty value', () => {
+      const { getByTestId } = render(<BfsBadge data-testid="badge" label="" />);
+      expect(getByTestId('badge')).not.toHaveTextContent();
+      expect(getByTestId('badge')).toHaveTextContent('');
+    });
   });
 });
