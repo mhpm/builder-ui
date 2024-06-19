@@ -2,6 +2,7 @@
 import { themes } from '@storybook/theming';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
+import 'semantic-ui-css/semantic.min.css'
 import '../src/bfs-theme.min.css';
 const preview = {
   parameters: {
